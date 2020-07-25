@@ -4,40 +4,47 @@ import sys
 import json
 import click
 
-@click.option('-f', '--file', required=True, help='Secrets JSON file', type=str)
-@click.option('-p', '--prefix', required=False, help='Add a prefix to every environment variable', type=str)
+@click.option('-j', '--json_file', required=True, help='Secrets JSON file', type=str)
+@click.option('-p', '--prefix', required=False, help='Add a prefix to every env variable', type=str)
 
 @click.command()
-def cli(file: str, prefix: str):
-    re_file = re.sub(r'^(\.\.\/)+', '', file)
+def cli(json_file: str, prefix: str) -> None:
+    re_file = re.sub(r'^(\.\.\/)+', '', json_file)
     click.echo(f'reading secrets from {re_file}')
 
-    if sys.platform == 'linux':
-        click.echo(f'Dectected OS: {sys.platform}')
-        write_in_bashrc(file, prefix)
-
-def write_in_bashrc(file: str, prefix: str):
+    os = sys.platform
+    if os == 'linux':
+        click.echo(f'dectected OS: {os}')
+        create_env_linux(json_file, prefix)
     
-    click.echo('Writing to bashrc')
+    if os.startswith('win'):
+        create_env_windows()
+
+
+def create_env_linux(json_file: str, prefix: str) -> None:
+    
+    click.echo('writing to bashrc')
 
     bashrc = open(os.path.join(os.environ.get('HOME'), '.bashrc'), 'a')
 
-    with open(file) as client_secrets_json:
+    bashrc.write('\n\n')
+    with open(json_file) as client_secrets_json:
         secrets = json.load(client_secrets_json)
         for k, v in secrets['web'].items():
-            click.echo(f'Creating env for: {k.upper()}')
     
             # write to .bashrc
             if prefix:
-                entry = f'export {prefix}_{k.upper()}={v}\n'
+                entry = f'{prefix}_{k.upper()}="{v}"\n'
             else:
-                entry = f'export {k.upper()}={v}\n'
+                entry = f'{k.upper()}="{v}"\n'
 
             bashrc.write(entry)
+
+            env_name = entry.split('=')[0]
+            click.echo(f'created env {env_name} for parameter {k}')
     
     bashrc.close()
 
 
-
-# if __name__ == '__main__':
-#     createEnvVariables(file)
+def create_env_windows():
+    click.echo('Not yet implemented')
