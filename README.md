@@ -26,11 +26,11 @@ Requires: `pip` and `python 3.6+`
 
 ```
 $ pip install --editable .
-$ gcp_secrets_to_env -j client_secrets.json -p ENV_Prefix
+$ gcp_secrets_to_env -j client_secrets.json -p ENV_Prefix -f .bashrc
 
 reading secrets from client_secrets.json
 dectected OS: linux
-writing to bashrc
+writing to .bashrc
 created env ENV_Prefix_CLIENT_ID for parameter client_id
 created env ENV_Prefix_PROJECT_ID for parameter project_id
 created env ENV_Prefix_AUTH_URI for parameter auth_uri
