@@ -1,5 +1,3 @@
-# https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration
-
 from setuptools import setup
 
 setup(
@@ -12,3 +10,5 @@ setup(
         gcp_secrets_to_env=secrets_to_env:cli
     '''
 )
+
+# https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration
