@@ -2,7 +2,7 @@
 
 A basic CLI tool to create environment variables in linux by parsing JSON file in Google client secrets format for web applications.
 
-More info on client secrets: [Google API Client Secrets](https://developers.google.com/api-client-library/dotnet/guide/aaa_client_secrets)
+More info on client secrets: [Google API Client Secrets](https://github.com/googleapis/google-api-python-client/blob/master/docs/client-secrets.md)
 
 The JSON file is used for storing `client_id`, `client_secret`, and other OAuth 2.0 parameters like:
 ```
@@ -41,3 +41,12 @@ created env ENV_Prefix_REDIRECT_URIS for parameter redirect_uris
 created env ENV_Prefix_JAVASCRIPT_ORIGINS for parameter javascript_origins
 
 ```
+
+#### Secrets
+
+- `client_id` (string): The client ID.
+- `auth_uri` (string): The authorization server endpoint URI.
+- `token_uri` (string): The token server endpoint URI.
+- `auth_provider_x509_cert_url` (string, _optional_): The URL of the public x509 certificate, used to verify the signature on JWTs, such as ID tokens, signed by the authentication provider.
+- `client_secret` (string): The client secret.
+- `redirect_uris` (list of strings): A list of valid redirection endpoint URIs. This list should match the list entered for the client ID on the [API Access pane](https://code.google.com/apis/console#:access) of the Google APIs Console.
